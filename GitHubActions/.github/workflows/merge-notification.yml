@@ -1,0 +1,23 @@
+name: Merge Success Message
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true &&
+        github.event.pull_request.base.ref == 'main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Merge Message
+        run: |
+          echo "=================================="
+          echo "🎉 Merge into MAIN branch successful!"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Merged by: ${{ github.actor }}"
+          echo "Commit ID: ${{ github.event.pull_request.merge_commit_sha }}"
+          echo "=================================="
+
