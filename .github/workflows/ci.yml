@@ -1,24 +1,27 @@
-
-name: CI Pipeline
+name: Simple CI
 
 on:
   push:
-    branches: [ "developer" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - developer
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+    defaults:
+      run:
+        working-directory: BookStore-Rest-API
 
-      - name: Set up JDK 17
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Build Project
         run: mvn clean install
